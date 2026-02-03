@@ -175,16 +175,46 @@
       const overlay = document.querySelector('body > div:last-child');
       if (overlay) overlay.remove();
 
-      const gallery = document.createElement('div');
-      gallery.innerHTML = `
-        <div style="margin-top:30px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap; animation: fadeIn 0.8s ease;">
-          <img src="gif1.gif" onclick="openImagePopup(this.src)" style="cursor:pointer; width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
-          <img src="gif2.gif" onclick="openImagePopup(this.src)" style="cursor:pointer; width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
-          <img src="gif3.gif" onclick="openImagePopup(this.src)" style="cursor:pointer; width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
+      const popup = document.createElement('div');
+      popup.innerHTML = `
+        <div style="
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10000;
+        ">
+          <div style="
+            background: #f7eaea;
+            padding: 25px;
+            border-radius: 24px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 420px;
+            animation: fadeIn 0.6s ease;
+          ">
+            <img src="gif1.gif" style="width:100%; border-radius:20px;" />
+            <img src="gif2.gif" style="width:100%; border-radius:20px;" />
+            <img src="gif3.gif" style="width:100%; border-radius:20px; grid-column: span 2;" />
+            <button onclick="this.closest('div').parentElement.remove()" style="
+              grid-column: span 2;
+              margin-top:10px;
+              background:#e63946;
+              color:white;
+              border:none;
+              padding:12px 26px;
+              border-radius:999px;
+              font-size:1rem;
+              cursor:pointer;
+            ">Cerrar 💕</button>
+          </div>
         </div>
       `;
 
-      document.querySelector('.card').appendChild(gallery);
+      document.body.appendChild(popup);
     }
 
     function openImagePopup(src) {
