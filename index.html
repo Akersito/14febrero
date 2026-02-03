@@ -95,6 +95,21 @@ button:hover { background-color: #a52a3c; }
     font-size: 14px;
     opacity: .8;
 }
+
+.reset-btn {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #d63447;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 25px;
+    border: none;
+    font-size: 16px;
+    z-index: 2000;
+}
+
 </style>
 </head>
 
@@ -121,7 +136,10 @@ button:hover { background-color: #a52a3c; }
         <img src="gif3.gif">
     </div>
     <div class="swipe-text">Dezliza:)</div>
+    <button class="reset-btn" onclick="resetAll()">Regresar.</button>
 </div>
+    
+let heartInterval = null;
 
 <script>
 function showMessage() {
@@ -153,21 +171,58 @@ function yes() {
     if (!heartInterval) {
         heartInterval = setInterval(createHeart, 300);
     }
-
-    setTimeout(() => {
-        document.getElementById("gif-overlay").style.display = "flex";
-    }, 1200);
+    else { shownopopup()}
 }
 
 function no() {
-    alert("Vamos… dime que sí 😘");
+    alert("Andale… dime que sí 😘");
+}
+function shownopopup()
+{
+    const popup = document.createElement("div");
+
+    popup.style.position = "fixed";
+    popup.style.bottom = "20px";
+    popup.style.left = "50%";
+    popup.style.transform = "translateX(-50%)";
+    popup.style.background = "#fff";
+    popup.style.padding = "15px 20px";
+    popup.style.borderRadius = "20px";
+    popup.style.boxShadow = "0 5px 15px rgba(0,0,0,0.2)";
+    popup.style.zIndex = "9999";
+    popup.style.fontSize = "16px";
+    popup.style.color = "#d63447";
+    popup.innerHTML = "Ándale… dime que sí 🥺💖";
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        popup.remove();
+    }, 2500);
 }
 
 function closeGifs() {
     document.getElementById("gif-overlay").style.display = "none";
 }
+function resetAll() {
+    // Cierra los GIFs
+    document.getElementById("gif-overlay").style.display = "none";
+
+    // Detiene los corazones
+    if (heartInterval) {
+        clearInterval(heartInterval);
+        heartInterval = null;
+    }
+
+    // Elimina corazones existentes
+    document.querySelectorAll(".heart").forEach(h => h.remove());
+
+    // Oculta la pregunta para empezar de nuevo
+    document.getElementById("message").classList.add("hidden");
+}
 </script>
 
 </body>
 </html>
+
 
