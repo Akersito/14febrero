@@ -103,6 +103,7 @@
 
   <script>
     function sayYes() {
+      createHearts();
       const popup = document.createElement('div');
       popup.innerHTML = `
         <div style="
@@ -120,27 +121,16 @@
             border-radius: 20px;
             max-width: 380px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            box-shadow:0 20px 40px rgba(0,0,0,0.25);
             animation: fadeIn 0.5s ease;
           ">
             <h2 style="color:#e63946; margin-bottom:10px;">🥰 Sabía que dirías que sí</h2>
             <p style="font-size:1.1rem; color:#333;">
-              Gracias por ser mi lugar seguro, mi amor y mi mejor elección.
+              Gracias por ser mi lugar seguro, mi amor.
               <br><br>
               No puedo esperar para pasar este Valentine contigo 💖
             </p>
-            <button onclick="this.closest('div').remove()" style="
-              margin-top:20px;
-              background:#e63946;
-              color:white;
-              border:none;
-              padding:12px 26px;
-              border-radius:999px;
-              font-size:1rem;
-              cursor:pointer;
-            ">Cerrar 💕</button>
-          </div>
-                    <button onclick="closePopupAndShowImages()" style="
+            <button onclick="closePopupAndShowImages()" style="
               margin-top:20px;
               background:#e63946;
               color:white;
@@ -156,6 +146,31 @@
       document.body.appendChild(popup);
     }
 
+    function createHearts() {
+      for (let i = 0; i < 35; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤️';
+        heart.style.position = 'fixed';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.bottom = '-20px';
+        heart.style.fontSize = Math.random() * 22 + 14 + 'px';
+        heart.style.animation = 'floatUp 4s linear forwards';
+        heart.style.zIndex = 500;
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes floatUp {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-100vh); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+
     function closePopupAndShowImages() {
       const overlay = document.querySelector('body > div:last-child');
       if (overlay) overlay.remove();
@@ -163,13 +178,32 @@
       const gallery = document.createElement('div');
       gallery.innerHTML = `
         <div style="margin-top:30px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap; animation: fadeIn 0.8s ease;">
-          <img src="gif1.gif" style="width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
-          <img src="gif2.gif" style="width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
-          <img src="gif3.gif" style="width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
+          <img src="gif1.gif" onclick="openImagePopup(this.src)" style="cursor:pointer; width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
+          <img src="gif2.gif" onclick="openImagePopup(this.src)" style="cursor:pointer; width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
+          <img src="gif3.gif" onclick="openImagePopup(this.src)" style="cursor:pointer; width:120px; border-radius:18px; box-shadow:0 10px 20px rgba(0,0,0,0.2);" />
         </div>
       `;
 
       document.querySelector('.card').appendChild(gallery);
+    }
+
+    function openImagePopup(src) {
+      const popup = document.createElement('div');
+      popup.innerHTML = `
+        <div style="
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10000;
+        ">
+          <img src="${src}" style="max-width:90%; max-height:80%; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.4); animation: fadeIn 0.4s ease;" />
+        </div>
+      `;
+      popup.onclick = () => popup.remove();
+      document.body.appendChild(popup);
     }
 
     function moveNo(btn) {
