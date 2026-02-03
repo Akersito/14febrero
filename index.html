@@ -23,8 +23,8 @@ body {
     padding: 25px;
     border-radius: 18px;
     box-shadow: 0 20px 40px rgba(0,0,0,.15);
-    z-index: 2;
     position: relative;
+    z-index: 2;
 }
 
 .hidden { display: none; }
@@ -90,7 +90,7 @@ button:hover { background-color: #a52a3c; }
 
 .swipe-text {
     position: absolute;
-    bottom: 40px;
+    bottom: 80px;
     color: white;
     font-size: 14px;
     opacity: .8;
@@ -109,7 +109,6 @@ button:hover { background-color: #a52a3c; }
     font-size: 16px;
     z-index: 2000;
 }
-
 </style>
 </head>
 
@@ -118,13 +117,13 @@ button:hover { background-color: #a52a3c; }
 <div class="container">
     <h1>Hola mi chamaquitaaa ❤️</h1>
     <p>Quería hacerte una pregunta, de nuevo.</p>
-    <button onclick="showMessage()">Picale aquí</button>
+    <button onclick="showMessage()">Pícale aquí</button>
 
     <div id="message" class="hidden">
         <h2>Quiero pasar todos los 14 de febrero contigo</h2>
         <p>¿Quieres ser mi San Valentine?</p>
-        <button onclick="yes()">Por supuesto💕</button>
-        <button onclick="no()">Nombre😢</button>
+        <button onclick="yes()">Por supuesto 💕</button>
+        <button onclick="no()">Nombre 😢</button>
     </div>
 </div>
 
@@ -135,52 +134,48 @@ button:hover { background-color: #a52a3c; }
         <img src="gif2.gif">
         <img src="gif3.gif">
     </div>
-    <div class="swipe-text">Dezliza:)</div>
-    <button class="reset-btn" onclick="resetAll()">Regresar.</button>
+    <div class="swipe-text">Desliza 💕</div>
+    <button class="reset-btn" onclick="resetAll()">Regresar 💖</button>
 </div>
-    
-let heartInterval = null;
 
 <script>
+let heartInterval = null;
+
 function showMessage() {
     document.getElementById("message").classList.remove("hidden");
 }
 
-/* ❤️ CORAZONES SUAVES */
+/* ❤️ CORAZONES */
 function createHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤️";
 
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.bottom = "-30px";
-    heart.style.fontSize = (16 + Math.random() * 24) + "px";
+    heart.style.fontSize = (18 + Math.random() * 24) + "px";
     heart.style.animationDuration = (6 + Math.random() * 4) + "s";
-    heart.style.opacity = Math.random();
 
     document.body.appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 10000);
+    setTimeout(() => heart.remove(), 10000);
 }
-
-let heartInterval;
 
 function yes() {
     if (!heartInterval) {
-        heartInterval = setInterval(createHeart, 300);
+        heartInterval = setInterval(createHeart, 250);
     }
-    else { shownopopup()}
+
+    setTimeout(() => {
+        document.getElementById("gif-overlay").style.display = "flex";
+    }, 800);
 }
 
 function no() {
-    alert("Andale… dime que sí 😘");
+    shownopopup();
 }
-function shownopopup()
-{
-    const popup = document.createElement("div");
 
+function shownopopup() {
+    const popup = document.createElement("div");
     popup.style.position = "fixed";
     popup.style.bottom = "20px";
     popup.style.left = "50%";
@@ -190,39 +185,30 @@ function shownopopup()
     popup.style.borderRadius = "20px";
     popup.style.boxShadow = "0 5px 15px rgba(0,0,0,0.2)";
     popup.style.zIndex = "9999";
-    popup.style.fontSize = "16px";
     popup.style.color = "#d63447";
     popup.innerHTML = "Ándale… dime que sí 🥺💖";
 
     document.body.appendChild(popup);
 
-    setTimeout(() => {
-        popup.remove();
-    }, 2500);
+    setTimeout(() => popup.remove(), 2500);
 }
 
 function closeGifs() {
     document.getElementById("gif-overlay").style.display = "none";
 }
+
 function resetAll() {
-    // Cierra los GIFs
     document.getElementById("gif-overlay").style.display = "none";
 
-    // Detiene los corazones
     if (heartInterval) {
         clearInterval(heartInterval);
         heartInterval = null;
     }
 
-    // Elimina corazones existentes
     document.querySelectorAll(".heart").forEach(h => h.remove());
-
-    // Oculta la pregunta para empezar de nuevo
     document.getElementById("message").classList.add("hidden");
 }
 </script>
 
 </body>
 </html>
-
-
