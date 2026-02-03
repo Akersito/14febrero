@@ -180,28 +180,36 @@
         <div style="
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.7);
+          background: rgba(0,0,0,0.65);
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 10000;
         ">
           <div style="
-            background: #f7eaea;
-            padding: 25px;
+            background: #ffe6f0;
             border-radius: 24px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            max-width: 420px;
+            padding: 20px;
+            max-width: 95%;
+            width: 420px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             animation: fadeIn 0.6s ease;
           ">
-            <img src="gif1.gif" style="width:100%; border-radius:20px;" />
-            <img src="gif2.gif" style="width:100%; border-radius:20px;" />
-            <img src="gif3.gif" style="width:100%; border-radius:20px; grid-column: span 2;" />
+            <div style="
+              display: flex;
+              gap: 14px;
+              overflow-x: auto;
+              scroll-snap-type: x mandatory;
+              -webkit-overflow-scrolling: touch;
+            ">
+              <img src="gif1.gif" style="scroll-snap-align:center; flex: 0 0 auto; width: 280px; border-radius: 20px;" />
+              <img src="gif2.gif" style="scroll-snap-align:center; flex: 0 0 auto; width: 280px; border-radius: 20px;" />
+              <img src="gif3.gif" style="scroll-snap-align:center; flex: 0 0 auto; width: 280px; border-radius: 20px;" />
+            </div>
+            <p style="text-align:center; margin-top:12px; color:#e63946; font-weight:600;">Desliza 💕</p>
             <button onclick="this.closest('div').parentElement.remove()" style="
-              grid-column: span 2;
-              margin-top:10px;
+              display:block;
+              margin: 10px auto 0;
               background:#e63946;
               color:white;
               border:none;
