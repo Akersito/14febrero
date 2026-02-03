@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para mi vida...</title>
+<title>Para mi vida ❤️</title>
 
 <style>
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    text-align: center;
     background: linear-gradient(180deg, #ffe4e1, #ffd1dc);
     color: #d63447;
-    margin: 0;
+    text-align: center;
     overflow: hidden;
 }
 
-/* CONTENEDOR */
+/* CONTENEDOR PRINCIPAL */
 .container {
     max-width: 600px;
-    margin: 80px auto;
+    margin: 90px auto;
     background: white;
     padding: 25px;
     border-radius: 18px;
@@ -27,19 +27,24 @@ body {
     z-index: 2;
 }
 
-.hidden { display: none; }
+.hidden {
+    display: none;
+}
 
 button {
     background-color: #d63447;
     color: white;
-    padding: 12px 20px;
+    padding: 12px 22px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    margin-top: 15px;
+    margin: 10px;
     font-size: 16px;
 }
-button:hover { background-color: #a52a3c; }
+
+button:hover {
+    background-color: #a52a3c;
+}
 
 /* ❤️ CORAZONES */
 .heart {
@@ -51,12 +56,12 @@ button:hover { background-color: #a52a3c; }
 }
 
 @keyframes floatHeart {
-    0% {
+    from {
         transform: translateY(0) scale(1);
         opacity: 1;
     }
-    100% {
-        transform: translateY(-110vh) scale(1.4);
+    to {
+        transform: translateY(-120vh) scale(1.4);
         opacity: 0;
     }
 }
@@ -65,20 +70,22 @@ button:hover { background-color: #a52a3c; }
 #gif-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.85);
+    background: rgba(0,0,0,0.85);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    flex-direction: column;
 }
 
-/* 📱 SCROLL HORIZONTAL */
+/* 📱 GIFS EN FILA */
 .gif-wrapper {
     display: flex;
     gap: 20px;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     padding: 20px;
+    scroll-snap-type: x mandatory;
+    max-width: 100vw;
 }
 
 .gif-wrapper img {
@@ -88,25 +95,32 @@ button:hover { background-color: #a52a3c; }
     box-shadow: 0 15px 30px rgba(0,0,0,.5);
 }
 
+/* TEXTO */
 .swipe-text {
-    position: absolute;
-    bottom: 80px;
     color: white;
+    opacity: 0.8;
     font-size: 14px;
-    opacity: .8;
+    margin-top: 10px;
 }
 
+/* BOTÓN RESET */
 .reset-btn {
+    margin-top: 20px;
+    background: #d63447;
+}
+
+/* POPUP NO */
+#no-popup {
     position: fixed;
-    bottom: 25px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: #d63447;
-    color: white;
-    padding: 12px 22px;
+    background: white;
+    color: #d63447;
+    padding: 15px 22px;
     border-radius: 25px;
-    border: none;
-    font-size: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.2);
+    display: none;
     z-index: 2000;
 }
 </style>
@@ -116,20 +130,20 @@ button:hover { background-color: #a52a3c; }
 
 <div class="container">
     <h1>Hola mi chamaquitaaa ❤️</h1>
-    <p>Quería hacerte una pregunta, de nuevo.</p>
-    <button onclick="showMessage()">Pícale aquí</button>
+    <p>Quería hacerte una pregunta…</p>
+    <button onclick="showQuestion()">Pícale aquí</button>
 
-    <div id="message" class="hidden">
+    <div id="question" class="hidden">
         <h2>Quiero pasar todos los 14 de febrero contigo</h2>
-        <p>¿Quieres ser mi San Valentine?</p>
+        <p>¿Quieres ser mi San Valentine? 💖</p>
         <button onclick="yes()">Por supuesto 💕</button>
         <button onclick="no()">Nombre 😢</button>
     </div>
 </div>
 
-<!-- 🌑 POPUP GIFS -->
-<div id="gif-overlay" onclick="closeGifs()">
-    <div class="gif-wrapper" onclick="event.stopPropagation()">
+<!-- 🌑 GIF OVERLAY -->
+<div id="gif-overlay">
+    <div class="gif-wrapper">
         <img src="gif1.gif">
         <img src="gif2.gif">
         <img src="gif3.gif">
@@ -138,28 +152,30 @@ button:hover { background-color: #a52a3c; }
     <button class="reset-btn" onclick="resetAll()">Regresar 💖</button>
 </div>
 
+<!-- POPUP NO -->
+<div id="no-popup">Ándale… dime que sí 🥺💖</div>
+
 <script>
 let heartInterval = null;
 
-function showMessage() {
-    document.getElementById("message").classList.remove("hidden");
+/* MOSTRAR PREGUNTA */
+function showQuestion() {
+    document.getElementById("question").classList.remove("hidden");
 }
 
-/* ❤️ CORAZONES */
+/* CREAR CORAZONES */
 function createHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤️";
-
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = (18 + Math.random() * 24) + "px";
     heart.style.animationDuration = (6 + Math.random() * 4) + "s";
-
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 10000);
 }
 
+/* SI */
 function yes() {
     if (!heartInterval) {
         heartInterval = setInterval(createHeart, 250);
@@ -170,35 +186,17 @@ function yes() {
     }, 800);
 }
 
+/* NO */
 function no() {
-    shownopopup();
+    const popup = document.getElementById("no-popup");
+    popup.style.display = "block";
+    setTimeout(() => popup.style.display = "none", 2500);
 }
 
-function shownopopup() {
-    const popup = document.createElement("div");
-    popup.style.position = "fixed";
-    popup.style.bottom = "20px";
-    popup.style.left = "50%";
-    popup.style.transform = "translateX(-50%)";
-    popup.style.background = "#fff";
-    popup.style.padding = "15px 20px";
-    popup.style.borderRadius = "20px";
-    popup.style.boxShadow = "0 5px 15px rgba(0,0,0,0.2)";
-    popup.style.zIndex = "9999";
-    popup.style.color = "#d63447";
-    popup.innerHTML = "Ándale… dime que sí 🥺💖";
-
-    document.body.appendChild(popup);
-
-    setTimeout(() => popup.remove(), 2500);
-}
-
-function closeGifs() {
-    document.getElementById("gif-overlay").style.display = "none";
-}
-
+/* RESET TOTAL */
 function resetAll() {
     document.getElementById("gif-overlay").style.display = "none";
+    document.getElementById("question").classList.add("hidden");
 
     if (heartInterval) {
         clearInterval(heartInterval);
@@ -206,7 +204,6 @@ function resetAll() {
     }
 
     document.querySelectorAll(".heart").forEach(h => h.remove());
-    document.getElementById("message").classList.add("hidden");
 }
 </script>
 
